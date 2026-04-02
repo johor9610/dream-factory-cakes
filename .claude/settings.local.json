@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/johor/dream-factory-cakes -maxdepth 1 -name logo* -o -maxdepth 1 -name *.png)"
+    ]
+  }
+}
