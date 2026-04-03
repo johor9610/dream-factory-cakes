@@ -1345,4 +1345,321 @@ p {
   z-index: 80;
 }
 
+.nav-overlay.active {
+  display: block;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PREMIUM ANIMATIONS — DREAM FACTORY CAKES
+   Entradas · Parallax · Galería · Scroll · WhatsApp · Lightbox
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── A. HERO — ENTRADA CINEMATOGRÁFICA ─────────────────────── */
+
+/* Estado inicial oculto para elementos del hero */
+.hero-content .fade-up {
+  filter: blur(3px);
+  transform: translateY(22px);
+  /* Sobreescribir transición con easing premium y filtro blur */
+  transition:
+    opacity   0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    filter    0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform, filter;
+}
+
+.hero-content .fade-up.visible {
+  filter: blur(0px);
+}
+
+/* Delays específicos por elemento (override stagger genérico) */
+.hero-content .stagger-1 { transition-delay: 0.50s; }
+.hero-content .stagger-2 { transition-delay: 1.00s; }
+.hero-content .stagger-3 { transition-delay: 1.30s; }
+.hero-content .stagger-4 { transition-delay: 1.50s; }
+.hero-content .stagger-5 { transition-delay: 1.60s; }
+.hero-content .stagger-6 { transition-delay: 1.80s; }
+
+/* Hero image: zoom-out sutil al cargar */
+@keyframes heroImgZoom {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1.0);  }
+}
+
+.hero-img {
+  animation: heroImgZoom 2.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform;
+}
+
+/* ── B. PARALLAX ───────────────────────────────────────────── */
+/* JS maneja transform:translateY via rAF — se declara will-change */
+.hero-visual {
+  will-change: transform;
+}
+
+/* ── C. GALERÍA — HOVER PREMIUM ────────────────────────────── */
+
+/* Imagen: scale suave a 1.05 */
+.gallery-img {
+  transform: scale(1.0);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.gallery-item:hover .gallery-img {
+  transform: scale(1.05);
+}
+
+/* Overlay oscuro sutil sobre la foto */
+.gallery-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: 1;
+  transition: background 0.4s ease-out;
+  border-radius: var(--radius-lg);
+  pointer-events: none;
+}
+
+.gallery-item:hover::before {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+/* Caption: slide-up desde abajo */
+.gallery-caption {
+  z-index: 2;
+  transform: translateY(14px);
+  opacity: 0;
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity   0.4s ease-out;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.72) 0%, transparent 100%);
+  will-change: transform, opacity;
+}
+
+.gallery-item:hover .gallery-caption {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Mobile: caption siempre visible */
+@media (hover: none) {
+  .gallery-caption {
+    transform: translateY(0);
+    opacity: 1;
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.65) 0%, transparent 100%);
+  }
+}
+
+/* ── D. SCROLL ANIMATIONS — UPGRADE ───────────────────────── */
+
+/* Override de las reglas base (misma especificidad = última gana) */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity   0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
+}
+
+.fade-in.visible { opacity: 1; }
+
+/* ── E. TÍTULOS DE SECCIÓN — TRACKING ANIMATION ────────────── */
+/* La clase .track-animate la añade JS via IO */
+@keyframes trackClose {
+  from {
+    opacity: 0;
+    letter-spacing: 0.08em;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: normal;
+    transform: translateY(0);
+  }
+}
+
+.section-header h2,
+.cta-final h2 {
+  will-change: letter-spacing, opacity, transform;
+}
+
+.track-animate {
+  animation: trackClose 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── F. DIVIDER — DRAW ANIMATION ───────────────────────────── */
+/* scaleX en lugar de width → solo transform, GPU-friendly */
+.divider {
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.divider.visible {
+  transform: scaleX(1);
+}
+
+/* ── G. WHATSAPP FLOTANTE ──────────────────────────────────── */
+
+/* Estado inicial oculto (JS añade .wa-visible después de 2s) */
+.wa-float {
+  opacity: 0;
+  transform: translateX(110px) scale(0.65);
+  pointer-events: none;
+  transition: none;
+  will-change: transform, opacity;
+}
+
+/* Bounce-in desde la derecha */
+@keyframes waBounceIn {
+  0%   { transform: translateX(110px) scale(0.65); opacity: 0; }
+  55%  { transform: translateX(-8px)  scale(1.06); opacity: 1; }
+  75%  { transform: translateX(4px)   scale(0.97); }
+  90%  { transform: translateX(-2px)  scale(1.01); }
+  100% { transform: translateX(0)     scale(1);    }
+}
+
+/* "Respirar" cada 4s */
+@keyframes waBreath {
+  0%, 80%, 100% {
+    transform: scale(1.0);
+    box-shadow: 0 4px 20px rgba(37, 211, 102, .35);
+  }
+  90% {
+    transform: scale(1.10);
+    box-shadow: 0 6px 28px rgba(37, 211, 102, .50);
+  }
+}
+
+.wa-float.wa-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+  /* Bounce-in primero, luego breath a partir de los 3.5s */
+  animation:
+    waBounceIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+    waBreath   4s  ease-in-out 3.5s infinite;
+}
+
+.wa-float.wa-visible:hover {
+  transform: scale(1.15) !important;
+  box-shadow: 0 10px 32px rgba(37, 211, 102, .55) !important;
+  animation-play-state: paused;
+}
+
+/* ── H. LIGHTBOX — ZOOM IN/OUT ──────────────────────────────── */
+
+@keyframes lbBackdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lbImgIn {
+  from {
+    opacity: 0;
+    transform: scale(0.78) translateY(20px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0px);
+  }
+}
+
+@keyframes lbImgOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.86) translateY(10px); }
+}
+
+/* Reemplaza la transición simple por animación */
+.lightbox {
+  transition: opacity 0.3s ease;
+}
+
+.lightbox.active {
+  animation: lbBackdropIn 0.3s ease-out both;
+}
+
+.lightbox-img {
+  /* Reset del scale inicial del CSS base */
+  transform: none;
+  will-change: transform, opacity, filter;
+}
+
+/* Override de la transición base: usamos animación */
+.lightbox.active .lightbox-img {
+  transform: none;
+  animation: lbImgIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: none;
+}
+
+/* Al cerrar: clase .closing añadida por JS */
+.lightbox.closing .lightbox-img {
+  animation: lbImgOut 0.28s ease-in both;
+}
+
+.lightbox.closing {
+  animation: lbBackdropIn 0.28s ease-in reverse both;
+}
+
+/* ── I. PREFERS-REDUCED-MOTION ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  /* Desactivar todas las animaciones y transiciones largas */
+  *,
+  *::before,
+  *::after {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+    animation-delay:           0s     !important;
+  }
+
+  /* Hero: mostrar inmediatamente */
+  .hero-content .fade-up {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+
+  /* Divider: visible sin animación */
+  .divider {
+    transform: scaleX(1);
+  }
+
+  /* WhatsApp: visible sin bounce */
+  .wa-float {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  /* Galería: sin scale */
+  .gallery-img {
+    transform: scale(1) !important;
+  }
+
+  /* Scroll elements: visible de entrada */
+  .fade-up,
+  .fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .nav-overlay.active { display: block; }

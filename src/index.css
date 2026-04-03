@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-chocolate: #78350F;
+  --color-chocolate-md: #92400E;
+  --color-gold: #CA8A04;
+  --color-gold-light: #FDE68A;
+  --color-cream: #FEF3C7;
+  --color-cream-off: #FAFAF9;
+  --color-espresso: #1C1917;
+  --color-muted: #44403C;
+
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Montserrat", sans-serif;
+}
+
+:root {
+  --shadow-card: 0 4px 24px rgba(120, 53, 15, 0.1);
+  --shadow-card-hover: 0 12px 40px rgba(120, 53, 15, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FEF3C7;
+  color: #1C1917;
+  font-family: "Montserrat", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grain texture overlay */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gold glow on CTA hover */
+.btn-gold {
+  position: relative;
+  transition: all 200ms ease;
+}
+.btn-gold:hover {
+  box-shadow: 0 0 24px rgba(202, 138, 4, 0.35);
+}
+
+/* Connecting line for steps */
+.step-line {
+  background: linear-gradient(90deg, #CA8A04, #FDE68A, #CA8A04);
+}
+
+/* Polaroid tilt helpers */
+.tilt-left  { transform: rotate(-2deg); }
+.tilt-right { transform: rotate(2deg); }
+.tilt-none  { transform: rotate(0deg); }
+.tilt-left2 { transform: rotate(-1deg); }
+.tilt-right2 { transform: rotate(1.5deg); }
